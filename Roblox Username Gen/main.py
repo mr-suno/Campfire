@@ -55,17 +55,26 @@ def estimateCheck(Sample: int = 10) -> float:
    return (Stop - Start) / Sample
         
 def main():
-   Threads = input("⚙️ How many threads (Can increase speed, \"150\" if unspecified): ")
+   Thread_Count = input("⚙️ How many threads (Can increase speed, \"150\" if unspecified): ")
    Length = input("📈 Username Length (\"10\" if no response, requires 5+): ")
    Numbers_Only = input("💎 Enable Numbers-Only Usernames (\"false\" if left blank): ")
    Generate_Amount = input("👁️ How many users (By default, set to return 25): ")
 
    print("")
 
-   if int(Threads) > 1:
-      print(f"⚙️ Attempting to Process: {Generate_Amount} usernames with {Threads} threads.")
+   if not Thread_Count:
+      Thread_Count = 150
    else:
-      print(f"⚙️ Attempting to Process: {Generate_Amount} usernames with {Threads} thread.")
+      if int(Thread_Count) < 1:
+         Thread_Count = 150
+         print("⚠️ Automatically assigned 150 threads due to invalid thread count!")
+      else:
+         Thread_Count = int(Thread_Count)
+
+   if int(Thread_Count) > 1:
+      print(f"⚙️ Attempting to Process: {Generate_Amount} usernames with {Thread_Count} threads.")
+   else:
+      print(f"⚙️ Attempting to Process: {Generate_Amount} usernames with {Thread_Count} thread.")
 
    if not Length:
       Length = 10
@@ -76,15 +85,6 @@ def main():
          Length = 5
 
          print("❌ Automatically changed length to 5!\n")
-
-   if not Threads:
-      Threads = 150
-   else:
-      if int(Threads) < 1:
-         Threads = 150
-         print("⚠️ Automatically assigned 150 threads due to invalid thread count!")
-      else:
-         Threads = int(Threads)
 
    Only_Digits = False
    if Numbers_Only in ["True", "T", "true", "t"]:
@@ -111,7 +111,7 @@ def main():
 
    Start = time.time()
 
-   with ThreadPoolExecutor(max_workers=Threads) as Executor:
+   with ThreadPoolExecutor(max_workers=Thread_Count) as Executor:
       futures = {
          Executor.submit(processUser, User, Index + 1, Results_Queue, Generate_Amount): User
          for Index, User in enumerate(Unique)
