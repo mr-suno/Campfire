@@ -1,10 +1,18 @@
 import pyperclip
 
-Copy = input("⚙️ Copy to Clipboard (True if blank): ")
-Formula = "\\u{{{:X}}}".format(ord(input("👀 Enter an Emoji: ")))
+print("✨ More emoji support soon to come.")
 
-if not Copy or Copy in ["True", "T", "t", "true"]:
-    pyperclip.copy(Formula)
-    print("\n✅ Copied Emoji to Clipboard!")
+try:
+    Copy = input("\n⚙️ Copy to Clipboard (True if blank): ")
+    Formula = "\\u{{{:X}}}".format(ord(input("👀 Enter an Emoji: ")))
 
-print(f"\n➡️ Result: {Formula}")
+    if not Copy or Copy in ["True", "T", "t", "true"]:
+        pyperclip.copy(Formula)
+        print("\n✅ Copied Emoji to Clipboard!")
+
+    print(f"➡️ Result: {Formula}")
+
+except Exception as error:
+    print("❌ Something went wrong! Please try using a different emoji.")
+
+input("\n👍 Press anything to continue ...")
