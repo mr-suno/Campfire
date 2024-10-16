@@ -7,10 +7,5 @@
       "scripts": ["background.js"]
     }
   },
-  "icons": {
-    "16": "Content/logo.png",
-    "48": "Content/logo.png",
-    "128": "Content/logo.png"
-  },
   "permissions": ["storage", "windows", "system.display", "tabs"]
 }
